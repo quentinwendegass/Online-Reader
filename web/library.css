@@ -1,0 +1,213 @@
+
+body{
+    background-color: #2b2a2b;
+    margin: 0;
+    height: 100vh;
+}
+.header{
+    width: 100vw;
+    height: 60px;
+    background-color: #2b2a2b;
+}
+
+.header-item{
+    position: absolute;
+    line-height: 60px;
+    text-align: center;
+}
+
+.logo{
+    left: 0;
+    margin-left: 15px;
+    font-family: "Arial Rounded MT Bold", sans-serif;
+    font-size: x-large;
+    font-weight: bolder;
+    color: rgba(244,244,244,0.76);
+}
+
+.logout{
+    right: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #2b2a2b;
+    font-family: "Arial Rounded MT Bold", sans-serif;
+    font-size: large;
+    font-weight: bolder;
+    color: rgb(236, 236, 236);
+}
+
+.logout:hover{
+    cursor: pointer;
+}
+
+.profile{
+    right: 25%;
+    font-family: "Arial Rounded MT Bold", sans-serif;
+    font-size: medium;
+    font-weight: normal;
+    color: rgba(244,244,244,0.76);
+}
+
+
+.library-content{
+    background-color: rgb(236, 236, 236);
+    width: 100vw;
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    margin: 0px;
+    max-width:100%;
+    max-height:100%;
+    overflow: auto;
+    text-align: center;
+}
+
+.book{
+    display: inline-block;
+    background-image: url("test.png");
+    background-size: 100%;
+    background-position: center;
+}
+
+.book-content{
+    background-color: rgba(80,80,80,0.15);
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+    white-space: normal;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.add-book{
+    display: inline-flex;
+    background-color: rgba(80,80,80,0.9);
+}
+
+.add-book:hover{
+    cursor: pointer;
+}
+
+.book, .add-book{
+    vertical-align: top;
+    width: 210px;
+    height: 300px;
+    margin: 20px;
+    white-space: normal;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.icon{
+    position: relative;
+    margin: auto;
+
+    color: rgba(200,200, 200,0.7);
+}
+
+.description{
+    margin-top: 30px;
+    font-family: "Arial Rounded MT Bold", sans-serif;
+    color: rgba(238, 238, 238, 0.94);
+    opacity: 0;
+}
+
+.title{
+    font-family: "Arial Rounded MT Bold", sans-serif;
+    font-weight: bold;
+    font-size: larger;
+    color: rgba(32,32,32,0.94);
+}
+
+.add-book-content{
+    background-color: #4f4c50;
+    position: fixed;
+    display: none;
+    top: 25%;
+    left: 37.5%;
+    width: 25vw;
+    height: 50vh;
+    box-shadow: 10px 10px 30px #2b2a2b;
+    border-radius: 20px;
+}
+
+#title, #submit-btn, #description, #file-select, label{
+    margin: 0px auto 20px;
+    position: relative;
+    display: block;
+    width: 70%;
+    font-family: "Arial";
+
+}
+#title{
+    margin-top: 20px;
+    line-height: 30px;
+    font-size: large;
+}
+
+#description {
+    font-size: large;
+
+}
+
+.add-book-bar{
+    background-color: #2b2a2b;
+    border-radius: 20px 20px 0px 0px;
+}
+
+#close{
+    color: #cb1f2b;
+    margin-left: 0px;
+    padding: 5px;
+}
+
+#close:hover{
+    color: #6f131a;
+}
+
+#submit-btn{
+    font-family: "Arial Rounded MT Bold";
+    font-weight: 700;
+    background-color: #d1d1d1;
+    color: #222222;
+    text-align: center;
+    font-size: x-large;
+    border-width: 0px;
+    border-radius: 10px;
+}
+
+#submit-btn:hover{
+    background-color: #727272;
+}
+
+#file-select + label {
+    font-family: "Arial";
+    font-weight: 700;
+    background-color: #313131;
+    color: #eaeaea;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: large;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #cecece;
+}
+
+#file-select:focus + label,
+#file-select + label:hover {
+    background-color: #1f1f1f;
+    color: #cecece;
+}
+
+#file-select {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
