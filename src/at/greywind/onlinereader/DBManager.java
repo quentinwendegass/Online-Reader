@@ -12,6 +12,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +23,6 @@ public class DBManager {
     private Connection connect = null;
 
     public static void main(String[] args){
-
-        try {
-            String pdfFilename = "test.pdf";
-            PDDocument document = PDDocument.load(new File(pdfFilename));
-            PDFRenderer pdfRenderer = new PDFRenderer(document);
-
-            BufferedImage bim = pdfRenderer.renderImageWithDPI(0, 80, ImageType.RGB);
-
-            ImageIOUtil.writeImage(bim, pdfFilename + "-" + (0+1) + ".png", 20);
-
-            document.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
     }
 

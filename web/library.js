@@ -10,20 +10,32 @@ $(".add-book").hover(function () {
     $(this).animate({backgroundColor: "rgba(80,80,80,0.9)"}, "fast");
 });
 
+$(".book").click(function () {
+    $(".library-content").hide();
+    $(".add-book-content").hide();
+    $(".book-showcase").show();
+    $(".book-object").attr("data", "files/" + $(this).attr("id"));
+});
+
+$(".logo").click(function () {
+    $(".library-content").show();
+    $(".book-showcase").hide();
+});
+
 $(".book-content").hover(function () {
     $(this).stop();
     $(this).find(".description").stop();
     $(this).parent().stop();
     $(this).find(".description").animate({opacity: "1"}, "slow");
     $(this).animate({backgroundColor: "rgba(80,80,80,0.65)"}, "slow");
-    $(this).parent().animate({width: "300px", backgroundSize: "120%"}, "slow");
+    $(this).parent().animate({width: "300px"}, "slow");
 }, function () {
     $(this).stop();
     $(this).find(".description").stop();
     $(this).parent().stop();
     $(this).find(".description").animate({opacity: "0"}, "slow");
     $(this).animate({backgroundColor: "rgba(80,80,80,0.15)"}, "slow");
-    $(this).parent().animate({width: "210px", backgroundSize: "100%"}, "slow");
+    $(this).parent().animate({width: "210px"}, "slow");
 });
 
 $(".add-book").click(function () {

@@ -14,8 +14,6 @@
     <script src="library.js"></script>
     <script src="jquery-3.3.1.js"></script>
     <script src="jquery-color-2.1.2.js"></script>
-    <script src="pdf.js"></script>
-    <script src="pdf.worker.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
     <link rel="stylesheet" href="library.css">
 </head>
@@ -38,6 +36,10 @@
 
 </div>
 
+<div class="book-showcase">
+    <object class="book-object" data=""></object>
+</div>
+
 <div class="add-book-content">
     <div class="add-book-bar">
         <i id="close" class="fas fa-times-circle fa-2x icon"></i>
@@ -45,12 +47,11 @@
     <form id="upload" action="" method="post" enctype="multipart/form-data">
     <input type="text" placeholder="Title of the Book" id="title" name="title" required>
     <textarea rows=6 maxlength="2000" placeholder="Description of the Book (optional)" id="description" name="description"></textarea>
-    <input id="file-select" type = "file" name = "file" required/>
+    <input id="file-select" type = "file" accept="application/pdf" name = "file" required/>
         <label for="file-select">Choose a file</label>
     <input id="submit-btn" type="submit" value="Upload"/>
     </form>
     <h5 id="test"></h5>
-
 </div>
 
 <script>

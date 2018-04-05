@@ -12,7 +12,6 @@
 <head>
     <title>Books</title>
     <script src="library.js"></script>
-
 </head>
 <body>
 <%User user = (User)request.getSession().getAttribute("user");
@@ -28,9 +27,11 @@
 %>
 
 <% for(Book b : user.getBooks()){%>
-<div class="book">
+<div class="book" style="background-image: url('<%out.print("files/thumb/" + b.getName() + "-thumb.png");%>')" id="<%out.print(b.getName());%>">
     <div class="book-content">
-    <h3 class="title"><%out.print(b.getTitle());%></h3>
+        <div class="title-bar">
+            <h3 class="title"><%out.print(b.getTitle());%></h3>
+        </div>
     <p class="description"><%if(b.getDescription() != null)out.print(b.getDescription());%></p>
     </div>
 </div>

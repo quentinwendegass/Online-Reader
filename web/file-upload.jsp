@@ -11,6 +11,14 @@
 <%@ page import = "org.apache.commons.fileupload.servlet.*" %>
 <%@ page import="at.greywind.onlinereader.DBManager" %>
 <%@ page import="at.greywind.onlinereader.User" %>
+<%@ page import="java.nio.file.Files" %>
+<%@ page import="java.nio.file.Path" %>
+<%@ page import="java.nio.file.Paths" %>
+<%@ page import="org.apache.pdfbox.pdmodel.PDDocument" %>
+<%@ page import="org.apache.pdfbox.rendering.PDFRenderer" %>
+<%@ page import="java.awt.image.BufferedImage" %>
+<%@ page import="org.apache.pdfbox.rendering.ImageType" %>
+<%@ page import="org.apache.pdfbox.tools.imageio.ImageIOUtil" %>
 
 <%
     File file ;
@@ -51,6 +59,8 @@
             String title = null;
             String description = null;
 
+            Path path = null;
+
             while ( i.hasNext () ) {
                 FileItem fi = (FileItem)i.next();
                 if ( !fi.isFormField () ) {
@@ -61,17 +71,32 @@
                     long sizeInBytes = fi.getSize();
 
                     // Write the file
-                    if( fileName.lastIndexOf("\\") >= 0 ) {
-                        file = new File( filePath +
-                                fileName.substring( fileName.lastIndexOf("\\"))) ;
-                    } else {
-                        file = new File( filePath +
-                                fileName.substring(fileName.lastIndexOf("\\")+1)) ;
+
+
+                    path = Paths.get(filePath + fileName);
+                    int j = 0;
+                    while(Files.exists(path)){
+                        path = Paths.get(filePath + fileName + j);
+                        j++;
                     }
-                    fi.write( file ) ;
+
+                    fi.write( path.toFile() ) ;
+
+                    try {
+                        PDDocument document = PDDocument.load(path.toFile());
+                        PDFRenderer pdfRenderer = new PDFRenderer(document);
+
+                        BufferedImage bim = pdfRenderer.renderImageWithDPI(0, 80, ImageType.RGB);
+
+                        ImageIOUtil.writeImage(bim, path.getParent() + "/thumb/" + path.getFileName() + "-thumb.png", 80);
+
+                        document.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
                     out.println("Uploaded Filename: " + filePath +
-                            fileName + "<br>");
+                            path.getFileName() + "<br>");
                 }else{
                     String fieldName = fi.getFieldName();
                     String fieldValue = fi.getString();
@@ -88,7 +113,7 @@
 
             try{
                 User user = (User) request.getSession().getAttribute("user");
-                manager.addBookToUser(title, description, fileName, user.getId());
+                manager.addBookToUser(title, description, path.getFileName().toString(), user.getId());
             }catch (Exception e){
 
             }finally {
