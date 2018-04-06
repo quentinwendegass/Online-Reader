@@ -1,29 +1,18 @@
 package at.greywind.onlinereader;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.rendering.ImageType;
-import org.apache.pdfbox.rendering.PDFRenderer;
-import org.apache.pdfbox.tools.imageio.ImageIOUtil;
-
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DBManager {
     private Connection connect = null;
 
     public static void main(String[] args){
-
+        DBManager m = new DBManager();
+        try {
+            m.deleteBookFromUser(75, 5);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public DBManager(){
@@ -107,11 +96,20 @@ public class DBManager {
         }
     }
 
-    public void addBookToUser(String title, String description, String filename, int userID){
+    public void deleteBookFromUser(int bookID, int userID) throws SQLException {
+        Statement statement = connect.createStatement();
+        statement.execute("DELETE FROM online_reader.user_has_book WHERE user_id='"+ userID +"' and book_id='" + bookID + "'");
+        statement.close();
+
+        statement = connect.createStatement();
+        statement.execute("DELETE FROM online_reader.book WHERE id='" + bookID + "'");
+        statement.close();
+    }
+
+    public void addBookToUser(String title, String description, String filename, int userID) throws SQLException{
         Statement statement = null;
         ResultSet resultSet = null;
         try {
-
             PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO online_reader.book VALUE (default, ?, ?, ?)");
             preparedStatement.setString(1, filename);
             preparedStatement.setString(2, description);
@@ -131,7 +129,7 @@ public class DBManager {
             preparedStatement.executeUpdate();
             preparedStatement.close();
         }catch (Exception e){
-            e.printStackTrace();
+               throw e;
         }finally {
             closeSetAndStatement(resultSet, statement);
         }

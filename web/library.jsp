@@ -1,19 +1,14 @@
 <%@ page import="at.greywind.onlinereader.User" %>
 <%@ page import="at.greywind.onlinereader.Book" %>
-<%@ page import="at.greywind.onlinereader.DBManager" %><%--
-  Created by IntelliJ IDEA.
-  User: quentinwendegass
-  Date: 01.04.18
-  Time: 19:38
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="at.greywind.onlinereader.DBManager" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Library</title>
-    <script src="library.js"></script>
     <script src="jquery-3.3.1.js"></script>
     <script src="jquery-color-2.1.2.js"></script>
+    <script src="library.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
     <link rel="stylesheet" href="library.css">
 </head>
@@ -51,13 +46,10 @@
         <label for="file-select">Choose a file</label>
     <input id="submit-btn" type="submit" value="Upload"/>
     </form>
-    <h5 id="test"></h5>
+    <p id="upload-error"></p>
 </div>
 
-<script>
-    requestBooks()
-</script>
-
+<script>requestBooks()</script>
 
 </body>
 </html>

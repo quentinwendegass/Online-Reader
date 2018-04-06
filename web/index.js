@@ -1,56 +1,37 @@
-window.onload = function (ev) {
-  requestForm("login") ;
-};
+$(document).ready(function(){
+    $("#login").click(function () {
+        $("#signup-content").css({display: "none"});
+        $("#login-content").css({display: "block"});
+    });
 
-function submitLoginForm() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            window.location.href = "library.jsp";
-        }else if (this.readyState == 4 && this.status == 409) {
-            document.getElementById("error").innerHTML= this.responseText;
+    $("#signup").click(function () {
+        $("#login-content").css({display: "none"});
+        $("#signup-content").css({display: "block"});
+    });
+
+    $('#login-form').submit(function (e) {
+        e.preventDefault();
+        sendRequest($(this).serialize(), "library.jsp", $("#login-error"));
+    });
+
+    $('#signup-form').submit(function (e) {
+        e.preventDefault();
+        sendRequest($(this).serialize(), "library.jsp?signup=true", $("#signup-error"));
+    });
+});
+
+function sendRequest(data, href, error) {
+    $.ajax({
+        url: "sign.jsp",
+        type: "POST",
+        data: data,
+        cache: false,
+        success: function (data)
+        {
+            window.location.href = href;
+        },
+        error: function (jqXHR, exception) {
+            error.html(jqXHR.responseText);
         }
-    };
-    xhttp.open("POST", "db.jsp", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    var pwd = document.getElementById("password").value
-    var user = document.getElementById("username").value
-    xhttp.send("username="+ user + "&password=" + pwd + "&action=login");
+    });
 }
-
-function submitSignupForm() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            window.location.href = "library.jsp?signup=true";
-        }else if (this.readyState == 4 && this.status == 409) {
-            document.getElementById("error").innerHTML= this.responseText;
-        }
-    };
-    xhttp.open("POST", "db.jsp", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    var pwd = document.getElementById("password").value
-    var user = document.getElementById("username").value
-    var confPwd = document.getElementById("confirm-password").value
-    var email = document.getElementById("email").value
-    xhttp.send("username="+ user + "&password=" + pwd + "&action=signup" + "&confirm-password=" + confPwd +"&email=" + email);
-}
-
-function requestForm(id) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("wrapper").innerHTML = this.responseText;
-        }
-    };
-
-    if(id == "signup"){
-        xhttp.open("GET", "signup-form.jsp", true);
-    }else{
-        xhttp.open("GET", "login-form.jsp", true);
-    }
-    xhttp.send();
-}
-

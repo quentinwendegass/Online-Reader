@@ -1,6 +1,7 @@
 package at.greywind.onlinereader;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class User {
 
@@ -52,5 +53,13 @@ public class User {
 
     public void setBooks(ArrayList<Book> books){
         this.books = books;
+    }
+
+    public int getBookIdByName(String name) throws NoSuchElementException{
+        for(Book b : books){
+            if(b.getName().equals(name))
+                return b.getId();
+        }
+        throw new NoSuchElementException();
     }
 }

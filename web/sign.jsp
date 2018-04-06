@@ -1,16 +1,10 @@
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="at.greywind.onlinereader.*" %><%--
-  Created by IntelliJ IDEA.
-  User: quentinwendegass
-  Date: 01.04.18
-  Time: 19:47
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="at.greywind.onlinereader.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
-    <title>DB</title>
+    <title>Sign</title>
 </head>
 <body>
 <%
