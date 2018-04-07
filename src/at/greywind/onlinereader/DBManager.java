@@ -1,10 +1,15 @@
 package at.greywind.onlinereader;
 
+import javax.servlet.ServletContext;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DBManager {
     private Connection connect = null;
+
+    private static String dbName = null;
+    private static String dbPassword = null;
+    private static String dbUser = null;
 
     public static void main(String[] args){
         DBManager m = new DBManager();
@@ -15,10 +20,23 @@ public class DBManager {
         }
     }
 
+    public static boolean isDatabaseSet(){
+        if(dbName != null && dbPassword != null && dbUser != null)
+            return true;
+
+        return false;
+    }
+
+    public static void setDatabase(ServletContext context){
+        dbName = context.getInitParameter("db-name");
+        dbPassword = context.getInitParameter("db-password");
+        dbUser = context.getInitParameter("db-user");
+    }
+
     public DBManager(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connect = DriverManager.getConnection("jdbc:mysql://localhost/online_reader?" + "user=root&password=***REMOVED***");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost/"+ dbName + "?" + "user="+ dbUser + "&password=" + dbPassword);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -169,7 +187,6 @@ public class DBManager {
         }
     }
 
-
     public void close() {
         try {
             if (connect != null) {
@@ -179,5 +196,4 @@ public class DBManager {
 
         }
     }
-
 }

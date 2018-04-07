@@ -11,7 +11,6 @@
 <%@ page import="org.apache.pdfbox.tools.imageio.ImageIOUtil" %>
 <%@ page import="at.greywind.onlinereader.FailedToConvertThumbnailException" %>
 <%@ page import="java.nio.file.*" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -104,6 +103,7 @@
                 manager.close();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             response.setStatus(209);
             return;
         }

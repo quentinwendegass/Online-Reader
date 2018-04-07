@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Books</title>
-    <script src="library.js"></script>
+    <script src="script/library.js"></script>
 </head>
 <body>
 <%User user = (User)request.getSession().getAttribute("user");

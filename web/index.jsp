@@ -1,16 +1,21 @@
+<%@ page import="at.greywind.onlinereader.DBManager" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/solid.css" integrity="sha384-29Ax2Ao1SMo9Pz5CxU1KMYy+aRLHmOu6hJKgWiViCYpz3f9egAJNwjnKGgr+BXDN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/fontawesome.css" integrity="sha384-Lyz+8VfV0lv38W729WFAmn77iH5OSroyONnUva4+gYaQTic3iI2fnUKtDSpbVf0J" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
-    <script src="jquery-3.3.1.js"></script>
-    <script src="index.js"></script>
+    <link rel="stylesheet" href="style/index.css">
+    <script src="script/jquery-3.3.1.js"></script>
+    <script src="script/index.js"></script>
     <title>Online Reader</title>
   </head>
   <body>
 
   <% try{
+      if(!DBManager.isDatabaseSet()){
+          DBManager.setDatabase(pageContext.getServletContext());
+      }
+
       if(request.getParameter("logout").equals("true")){
           request.getSession().removeAttribute("user");
     }
