@@ -7,35 +7,35 @@
         <description>Password for the Database</description>
         <param-name>db-password</param-name>
         <param-value>
-            password
+
         </param-value>
     </context-param>
     <context-param>
         <description>User for the Database</description>
         <param-name>db-user</param-name>
         <param-value>
-            root
+
         </param-value>
     </context-param>
     <context-param>
         <description>Name of the Database</description>
         <param-name>db-name</param-name>
         <param-value>
-            name
+
         </param-value>
     </context-param>
     <context-param>
         <description>Location to store uploaded file</description>
         <param-name>file-upload</param-name>
         <param-value>
-            /Users/quentinwendegass/files/
+
         </param-value>
     </context-param>
     <context-param>
         <description>Location to store file that is too big</description>
         <param-name>file-upload-temp</param-name>
         <param-value>
-            /Users/quentinwendegass/temp/
+
         </param-value>
     </context-param>
 </web-app>
