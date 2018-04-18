@@ -22,7 +22,6 @@
 out/
 .idea/
 
-src/
 lib/
 *.iml
 WEB_INF/
