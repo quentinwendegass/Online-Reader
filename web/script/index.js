@@ -11,18 +11,18 @@ $(document).ready(function(){
 
     $('#login-form').submit(function (e) {
         e.preventDefault();
-        sendRequest($(this).serialize(), "library.jsp", $("#login-error"));
+        sendRequest($(this).serialize(), "library.php", $("#login-error"));
     });
 
     $('#signup-form').submit(function (e) {
         e.preventDefault();
-        sendRequest($(this).serialize(), "library.jsp?signup=true", $("#signup-error"));
+        sendRequest($(this).serialize(), "library.php?signup=true", $("#signup-error"));
     });
 });
 
 function sendRequest(data, href, error) {
     $.ajax({
-        url: "sign.jsp",
+        url: "sign.php",
         type: "POST",
         data: data,
         cache: false,

@@ -16,10 +16,10 @@ $(document).ready(function () {
             $(this).next("label").html(fileName);
     });
 
-    $("#upload").one('submit', function (e) {
+    $("#upload").on('submit', function (e) {
         e.preventDefault();
         $.ajax({
-            url: "file-upload.jsp",
+            url: "file-upload.php",
             type: "POST",
             data: new FormData(this),
             contentType: false,
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 $("#description").val("");
             },
             error: function (jqXHR, exception) {
-                var msg = 'Something went wrong with uploading your file!';
+                var msg = jqXHR.responseText;
                 $("#upload-error").html(msg);
             }
         });
@@ -46,7 +46,7 @@ $(document).ready(function () {
     });
 
     $(".logout").click(function () {
-        window.location.href = "index.jsp?logout=true";
+        window.location.href = "index.php?logout=true";
     });
 
     $(".logout").hover(function () {
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
 function requestBooks() {
     $.ajax({
-        url: "books.jsp",
+        url: "books.php",
         type: "POST",
         data: new FormData(),
         contentType: false,

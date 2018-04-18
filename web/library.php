@@ -1,7 +1,17 @@
-<%@ page import="at.greywind.onlinereader.User" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<?php
+require_once "src/User.php";
+session_start();
+?>
+
 <html>
 <head>
+    <?php
+    $user = $_SESSION["user"];
+
+    if($user == null){
+        echo "<script>location.href='index.php';</script>";
+    }
+    ?>
     <title>Library</title>
     <script src="script/jquery-3.3.1.js"></script>
     <script src="script/jquery-color-2.1.2.js"></script>
@@ -11,17 +21,9 @@
 </head>
 <body>
 
-<%
-    User user = (User)request.getSession().getAttribute("user");
-    if(user == null){
-        response.sendRedirect("index.jsp");
-        return;
-    }
-%>
-
 <div class="header">
     <span class="header-item logo">Library</span>
-    <span class="header-item profile">You are logged in as <%out.print(user.getUsername());%></span>
+    <span class="header-item profile">You are logged in as <?php if($user != null) echo $user->getUsername(); ?></span>
     <span class="header-item logout">Logout</span>
 </div>
 <div class="library-content">

@@ -15,7 +15,7 @@ $(document).ready(function () {
         $(".library-content").hide();
         $(".add-book-content").hide();
         $(".book-showcase").show();
-        $(".book-object").attr("data", "files/" + $(this).attr("id"));
+        $(".book-object").attr("data", "uploads/" + $(this).attr("id") + ".pdf");
     });
 
     $(".book-content").hover(function () {
@@ -44,7 +44,7 @@ $(document).ready(function () {
     $(".delete").click(function (e) {
         e.stopPropagation();
         $.ajax({
-            url: "delete-book.jsp",
+            url: "delete-book.php",
             type: "POST",
             data: {
                 name: $(this).closest(".book").attr("id")

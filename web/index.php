@@ -1,5 +1,14 @@
-<%@ page import="at.greywind.onlinereader.DBManager" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<?php
+session_start();
+
+try{
+    if($_GET["logout"] == "true"){
+        session_unset();
+        session_destroy();
+    }
+}catch (Exception $e){}
+?>
+
 <html>
   <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/solid.css" integrity="sha384-29Ax2Ao1SMo9Pz5CxU1KMYy+aRLHmOu6hJKgWiViCYpz3f9egAJNwjnKGgr+BXDN" crossorigin="anonymous">
@@ -10,18 +19,6 @@
     <title>Online Reader</title>
   </head>
   <body>
-
-  <% try{
-      if(!DBManager.isDatabaseSet()){
-          DBManager.setDatabase(pageContext.getServletContext());
-      }
-
-      if(request.getParameter("logout").equals("true")){
-          request.getSession().removeAttribute("user");
-    }
-  }catch (Exception e){
-
-  }%>
 
   <div id="content">
     <div id="bar">
