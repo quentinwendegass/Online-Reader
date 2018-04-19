@@ -37,20 +37,29 @@ class DBManager
             throw new SQLException();
         }
 
+        $sql = "SELECT * FROM user WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", strtolower($username));
 
-        $sql = "SELECT * FROM user WHERE username = '" . strtolower($username) . "'";
-        $result = $conn->query($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0){
             $result->close();
+            $stmt->close();
             $conn->close();
             throw new UserAlreadyExistsException();
         }
 
         $result->close();
+        $stmt->close();
 
-        $sql = "SELECT * FROM user WHERE email = '" . strtolower($email) . "'";
-        $result = $conn->query($sql);
+        $sql = "SELECT * FROM user WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", strtolower($email));
+
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0)
             throw new EmailAlreadyExistsException();
@@ -62,21 +71,27 @@ class DBManager
             throw new WrongPasswordException();
         }
 
-        $sql = "INSERT INTO online_reader.user VALUE (default, ?, ?, ?)";
+        $sql = "INSERT INTO online_reader.user VALUES (default, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $username, $email, $password);
 
         $stmt->execute();
         $stmt->close();
 
-        $sql = "SELECT * FROM user WHERE email = '" . strtolower($email) . "'";
-        $result = $conn->query($sql);
+        $sql = "SELECT * FROM user WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s",strtolower($email));
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
 
         $userData = $result->fetch_assoc();
 
         $user = new User($userData["id"], $userData["username"], $userData["email"], $userData["password"]);
 
         $result->close();
+        $stmt->close();
         $conn->close();
 
         return $user;
@@ -97,11 +112,16 @@ class DBManager
             throw new SQLException();
         }
 
-        $sql = "SELECT * FROM user WHERE username = '" . strtolower($username) . "'";
-        $result = $conn->query($sql);
+        $sql = "SELECT * FROM user WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s",strtolower($username));
+
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows == 0){
             $result->close();
+            $stmt->close();
             $conn->close();
             throw new NoSuchUserNameException();
         }
@@ -110,6 +130,7 @@ class DBManager
 
         if($userData["password"] != $password){
             $result->close();
+            $stmt->close();
             $conn->close();
             throw new WrongPasswordException();
         }
@@ -117,6 +138,7 @@ class DBManager
         $user = new User($userData["id"], $userData["username"], $userData["email"], $userData["password"]);
 
         $result->close();
+        $stmt->close();
         $conn->close();
 
         return $user;
@@ -134,20 +156,32 @@ class DBManager
             throw new SQLException();
         }
 
-        $sql = "DELETE FROM online_reader.user_has_book WHERE user_id='". $userID ."' and book_id='" . $bookID . "'";
+        $sql = "DELETE FROM online_reader.user_has_book WHERE user_id= ? and book_id = ?";
 
-        if ($conn->query($sql) === FALSE) {
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii",$userID, $bookID);
+
+
+        if ($stmt->execute() === FALSE) {
+            $stmt->close();
             $conn->close();
             throw new SQLException();
         }
 
-        $sql = "DELETE FROM online_reader.book WHERE id='" . $bookID . "'";
+        $stmt->close();
 
-        if ($conn->query($sql) === FALSE) {
+        $sql = "DELETE FROM online_reader.book WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i",$bookID);
+
+        if ($stmt->execute() === FALSE) {
+            $stmt->close();
             $conn->close();
             throw new SQLException();
         }
 
+        $stmt->close();
         $conn->close();
     }
 
@@ -166,18 +200,24 @@ class DBManager
             throw new SQLException();
         }
 
-        $sql = "INSERT INTO online_reader.book VALUE (default, ?, ?, ?)";
+        $sql = "INSERT INTO online_reader.book VALUES (default, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $filename, $description, $title);
 
         $stmt->execute();
         $stmt->close();
 
-        $sql = "SELECT * FROM book WHERE book.name = '" . $filename . "'";
-        $result = $conn->query($sql);
+        $sql = "SELECT * FROM book WHERE book.name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s",$filename);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows == 0){
+            $stmt->close();
             $result->close();
+            $conn->close();
             throw new NoSuchElementException();
         }
 
@@ -185,8 +225,9 @@ class DBManager
         $bookID = $bookData["id"];
 
         $result->close();
+        $stmt->close();
 
-        $sql = "INSERT INTO online_reader.user_has_book VALUE (?, ?)";
+        $sql = "INSERT INTO online_reader.user_has_book VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $userID, $bookID);
 
@@ -211,8 +252,12 @@ class DBManager
             throw new SQLException();
         }
 
-        $sql = "select book.id, book.name, book.description, book.title from book inner join user_has_book on book.id = user_has_book.book_id where user_has_book.user_id = " . $userID;
-        $result = $conn->query($sql);
+        $sql = "select book.id, book.name, book.description, book.title from book inner join user_has_book on book.id = user_has_book.book_id where user_has_book.user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if ($result->num_rows > 0){
             while($row = $result->fetch_assoc()) {
@@ -220,11 +265,13 @@ class DBManager
             }
         }else{
             $result->close();
+            $stmt->close();
             $conn->close();
             throw new NoSuchElementException();
         }
 
         $result->close();
+        $stmt->close();
         $conn->close();
 
         return $books;

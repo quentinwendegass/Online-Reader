@@ -160,11 +160,28 @@ body{
     position: fixed;
     display: none;
     top: 20%;
-    left: 37.5%;
-    width: 25vw;
+    left: 25%;
+    width: 50%;
     height: 55vh;
     box-shadow: 10px 10px 30px #2b2a2b;
     border-radius: 20px;
+}
+
+.add-book-bar{
+    background-color: #2b2a2b;
+    border-radius: 20px 20px 0px 0px;
+}
+
+@media screen and (max-width: 600px) {
+    .add-book-content{
+        left: 0%;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .add-book-bar{
+        border-radius: 0;
+    }
 }
 
 
@@ -185,11 +202,6 @@ body{
 #description {
     font-size: large;
 
-}
-
-.add-book-bar{
-    background-color: #2b2a2b;
-    border-radius: 20px 20px 0px 0px;
 }
 
 #close{
