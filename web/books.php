@@ -15,7 +15,6 @@ require_once "src/DBManager.php";
     try{
         $user->setBooks($db->getBooksForUser($user->getId()));
     }catch (Exception $e){
-        echo "<script>location.href='index.php';</script>";
     }
     ?>
     <title>Books</title>

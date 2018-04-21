@@ -18,6 +18,7 @@ $(document).ready(function () {
 
     $("#upload").on('submit', function (e) {
         e.preventDefault();
+        $("#submit-btn").prop("disabled",true);
         $.ajax({
             url: "file-upload.php",
             type: "POST",
@@ -33,10 +34,12 @@ $(document).ready(function () {
                 $("#title").val("");
                 $("#file-select").val("");
                 $("#description").val("");
+                $("#submit-btn").prop("disabled",false);
             },
             error: function (jqXHR, exception) {
                 var msg = jqXHR.responseText;
                 $("#upload-error").html(msg);
+                $("#submit-btn").prop("disabled",false);
             }
         });
     });
@@ -56,6 +59,19 @@ $(document).ready(function () {
         $(this).stop();
         $(this).animate({backgroundColor: "#2b2a2b", color: "rgb(236, 236, 236)"}, "fast");
     });
+});
+
+$(window).on('resize', function (e) {
+
+var windowWidth = $(window).width();
+var bookWidth = 250;
+var booksInRow = ~~(windowWidth / bookWidth);
+
+if(booksInRow * bookWidth + 150 > windowWidth){
+    $(".library-content").width((booksInRow - 1) * bookWidth + 200);
+}else{
+    $(".library-content").width(windowWidth);
+}
 });
 
 function requestBooks() {

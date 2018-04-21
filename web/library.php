@@ -18,6 +18,7 @@ session_start();
     <script src="script/library.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
     <link rel="stylesheet" href="style/library.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
@@ -26,8 +27,10 @@ session_start();
     <span class="header-item profile">You are logged in as <?php if($user != null) echo $user->getUsername(); ?></span>
     <span class="header-item logout">Logout</span>
 </div>
-<div class="library-content">
+<div id="library-wrapper">
+    <div class="library-content">
 
+    </div>
 </div>
 
 <div class="book-showcase">

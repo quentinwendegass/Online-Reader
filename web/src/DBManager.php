@@ -65,13 +65,14 @@ class DBManager
             throw new EmailAlreadyExistsException();
 
         $result->close();
+        $stmt->close();
 
         if($password != $confirmPassword){
             $conn->close();
             throw new WrongPasswordException();
         }
 
-        $sql = "INSERT INTO online_reader.user VALUES (default, ?, ?, ?)";
+        $sql = "INSERT INTO user VALUES(default, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $username, $email, $password);
 
@@ -156,7 +157,7 @@ class DBManager
             throw new SQLException();
         }
 
-        $sql = "DELETE FROM online_reader.user_has_book WHERE user_id= ? and book_id = ?";
+        $sql = "DELETE FROM user_has_book WHERE user_id= ? and book_id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii",$userID, $bookID);
@@ -170,7 +171,7 @@ class DBManager
 
         $stmt->close();
 
-        $sql = "DELETE FROM online_reader.book WHERE id = ?";
+        $sql = "DELETE FROM book WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i",$bookID);
@@ -200,7 +201,7 @@ class DBManager
             throw new SQLException();
         }
 
-        $sql = "INSERT INTO online_reader.book VALUES (default, ?, ?, ?)";
+        $sql = "INSERT INTO book VALUES (default, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $filename, $description, $title);
 
@@ -227,7 +228,7 @@ class DBManager
         $result->close();
         $stmt->close();
 
-        $sql = "INSERT INTO online_reader.user_has_book VALUES (?, ?)";
+        $sql = "INSERT INTO user_has_book VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $userID, $bookID);
 

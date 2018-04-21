@@ -8,7 +8,8 @@ require_once "src/DBManager.php";
 $user = $_SESSION["user"];
 
 if($user == null){
-    die(401);
+    http_response_code(401);
+    return;
 }
 
 $db = new DBManager();
